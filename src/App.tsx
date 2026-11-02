@@ -5,7 +5,7 @@ import { hangszerek, type OldalTipus, type Hangszer } from "./data"
 
 function App() {
   const [data, setData] = useState(hangszerek)
-  const [currentSite, setCurrentSite] = useState<OldalTipus>("index")
+  const [currentSite, setCurrentSite] = useState<OldalTipus>("mod")
 
   function hozzaad(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -24,6 +24,14 @@ function App() {
 
   function torles(index: number) {
     setData(data.filter((_, i) => index != i));
+  }
+
+  function flipKeszketen(index: number) {
+    setData((data) => data.map((a, i) => i == index ? { ...a, keszleten: !a.keszleten } : a))
+  }
+
+  function modositKezd() {
+
   }
 
   return (
@@ -51,14 +59,20 @@ function App() {
 
               <button type="submit">Hozzáadás</button><br />
             </form>
-            <HangszerTabla data={data} mod="admin" hangszerTorles={torles} hangszerModositKezd={modositKezd}></HangszerTabla>
+            <HangszerTabla data={data} mod={currentSite} hangszerTorles={torles} hangszerModositKezd={modositKezd} flipKeszketen={flipKeszketen}></HangszerTabla>
           </div>
         )
       }
 
       {
         currentSite == "index" && (
-          <HangszerTabla data={data} mod="index" hangszerTorles={torles} hangszerModositKezd={modositKezd}></HangszerTabla>
+          <HangszerTabla data={data} mod={currentSite} hangszerTorles={torles} hangszerModositKezd={modositKezd} flipKeszketen={flipKeszketen}></HangszerTabla>
+        )
+      }
+
+      {
+        currentSite == "mod" && (
+          <HangszerTabla data={data} mod={currentSite} hangszerTorles={torles} hangszerModositKezd={modositKezd} flipKeszketen={flipKeszketen}></HangszerTabla>
         )
       }
 

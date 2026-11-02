@@ -5,6 +5,7 @@ interface HangszerTablaProps {
     mod: OldalTipus;
     hangszerTorles: (id: number) => void;
     hangszerModositKezd: (id: number) => void;
+    flipKeszketen: (id: number) => void;
 }
 
 export function HangszerTabla(props: HangszerTablaProps) {
@@ -18,7 +19,19 @@ export function HangszerTabla(props: HangszerTablaProps) {
                             <td>{item.nev}</td>
                             <td>{item.tipus}</td>
                             <td>{item.ar}</td>
-                            <td>{item.keszleten ? "✅" : "❌"}</td>
+
+
+                            {
+                                props.mod == "index" && (
+                                    <td>{item.keszleten ? "✅" : "❌"}</td>)
+                            }
+
+                            {
+                                props.mod == "mod" && (<>
+                                    <td><button onClick={() => props.flipKeszketen(index)}>{item.keszleten ? "✅" : "❌"}</button></td>
+                                </>
+                                )
+                            }
 
                             {
                                 props.mod == "admin" && (<>
