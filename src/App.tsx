@@ -22,6 +22,10 @@ function App() {
     setData([hangszer, ...data]);
   }
 
+  function torles(index: number) {
+    setData(data.filter((_, i) => index != i));
+  }
+
   return (
     <>
       <button onClick={() => setCurrentSite("index")}>Index</button>
@@ -47,14 +51,14 @@ function App() {
 
               <button type="submit">Hozzáadás</button><br />
             </form>
-            <HangszerTabla data={data}></HangszerTabla>
+            <HangszerTabla data={data} mod="admin" hangszerTorles={torles}></HangszerTabla>
           </div>
         )
       }
 
       {
         currentSite == "index" && (
-          <HangszerTabla data={data}></HangszerTabla>
+          <HangszerTabla data={data} mod="index" hangszerTorles={torles}></HangszerTabla>
         )
       }
 
