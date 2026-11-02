@@ -1,14 +1,25 @@
 import { useState } from 'react'
 import './App.css'
 import { HangszerTabla } from "./components/HangszerTabla"
-import { hangszerek } from "./data"
+import { hangszerek, type OldalTipus } from "./data"
 
 function App() {
     const [data, setData] = useState(hangszerek)
+    const [currentSite, setCurrentSite] = useState<OldalTipus>("index")
 
   return (
     <>
-      <HangszerTabla data={data}></HangszerTabla>
+      <button onClick={()=>setCurrentSite("index")}>Index</button>
+      <button onClick={()=>setCurrentSite("admin")}>Admin</button>
+      <button onClick={()=>setCurrentSite("mod")}>Mod</button>
+
+
+    {
+      currentSite == "index" && (
+        <HangszerTabla data={data}></HangszerTabla>
+      )
+    }
+      
     </>
   )
 }

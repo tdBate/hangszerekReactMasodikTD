@@ -5,6 +5,8 @@ export interface Hangszer {
     keszleten: boolean;   // boolean
 }
 
+export type OldalTipus = "index" | "mod" | "admin"
+
 export const hangszerek: Hangszer[] = [
     { nev: "Zongora",
         tipus: "billentyűs",
