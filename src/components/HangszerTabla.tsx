@@ -11,7 +11,7 @@ interface HangszerTablaProps {
 export function HangszerTabla(props: HangszerTablaProps) {
     return (
         <>
-            <table>
+            <table className="table">
                 <thead><tr><td>Név</td> <td>Típus</td> <td>Ár</td> <td>Készleten</td> </tr></thead>
                 <tbody>
                     {props.data.map((item, index) => (
@@ -28,7 +28,7 @@ export function HangszerTabla(props: HangszerTablaProps) {
 
                             {
                                 props.mod == "mod" && (<>
-                                    <td><button onClick={() => props.flipKeszketen(index)}>{item.keszleten ? "✅" : "❌"}</button></td>
+                                    <td><button className="btn btn-success" onClick={() => props.flipKeszketen(index)}>{item.keszleten ? "✅" : "❌"}</button></td>
                                 </>
                                 )
                             }
@@ -36,10 +36,10 @@ export function HangszerTabla(props: HangszerTablaProps) {
                             {
                                 props.mod == "admin" && (<>
                                     <td>
-                                        <button onClick={() => { props.hangszerTorles(index) }}>Törlés</button>
+                                        <button className="btn btn-danger" onClick={() => { props.hangszerTorles(index) }}>Törlés</button>
                                     </td>
                                     <td>
-                                        <button onClick={() => { props.hangszerModositKezd(index) }}>Módosít</button>
+                                        <button className="btn btn-success" onClick={() => { props.hangszerModositKezd(index) }}>Módosít</button>
                                     </td>
                                 </>
                                 )

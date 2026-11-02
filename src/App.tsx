@@ -43,9 +43,9 @@ function App() {
 
   return (
     <>
-      <button onClick={() => setCurrentSite("index")}>Index</button>
-      <button onClick={() => setCurrentSite("admin")}>Admin</button>
-      <button onClick={() => setCurrentSite("mod")}>Mod</button>
+      <button className="btn btn-success" onClick={() => setCurrentSite("index")}>Index</button>
+      <button className="btn btn-success" onClick={() => setCurrentSite("admin")}>Admin</button>
+      <button className="btn btn-success" onClick={() => setCurrentSite("mod")}>Mod</button>
 
 
       {
@@ -63,8 +63,8 @@ function App() {
             <label htmlFor="keszleten">Készleten</label>
             <input id="keszleten" name="keszleten" type="checkbox" defaultChecked={szerkesztett?.keszleten ?? false} /><br />
 
-            <button type="submit">{editIndex === null ? "Hozzáadás" : "Mentés"}</button>
-            {editIndex !== null && <button type="button" onClick={() => setEditIndex(null)}>Mégse</button>}
+            <button type="submit" className="btn btn-success">{editIndex === null ? "Hozzáadás" : "Mentés"}</button>
+            {editIndex !== null && <button type="button" className="btn btn-success" onClick={() => setEditIndex(null)}>Mégse</button>}
           </form>
         )
       }
