@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type FormEvent } from 'react'
 import './App.css'
 import { HangszerTabla } from "./components/HangszerTabla"
 import { hangszerek, type OldalTipus, type Hangszer } from "./data"
@@ -6,20 +6,27 @@ import { hangszerek, type OldalTipus, type Hangszer } from "./data"
 function App() {
   const [data, setData] = useState(hangszerek)
   const [currentSite, setCurrentSite] = useState<OldalTipus>("mod")
+  const [editIndex, setEditIndex] = useState<number | null>(null)
+
+  const szerkesztett = editIndex == null ? null : data[editIndex]
 
   function hozzaad(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const formData = new FormData(form);
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
 
     const hangszer: Hangszer = {
-      nev: formData.get("nev")!.toString() ?? "",
-      tipus: formData.get("tipus")!.toString() ?? "",
-      ar: parseInt(formData.get("ar")!.toString()) ?? 0,
-      keszleten: true
+      nev: String(formData.get("nev")),
+      tipus: String(formData.get("tipus")),
+      ar: Number(formData.get("ar")),
+      keszleten: formData.get("keszleten") == "on",
     }
 
-    setData([hangszer, ...data]);
+    if (editIndex === null) {
+      setData([hangszer, ...data])
+    } else {
+      setData(data.map((a, i) => i == editIndex ? hangszer : a))
+    }
+    setEditIndex(null)
   }
 
   function torles(index: number) {
@@ -30,8 +37,8 @@ function App() {
     setData((data) => data.map((a, i) => i == index ? { ...a, keszleten: !a.keszleten } : a))
   }
 
-  function modositKezd() {
-
+  function modositKezd(index: number) {
+    setEditIndex(index)
   }
 
   return (
@@ -43,38 +50,32 @@ function App() {
 
       {
         currentSite == "admin" && (
-          <div>
-            <form onSubmit={hozzaad}>
-              <label htmlFor="nev">Név</label>
-              <input name='nev' id="nev" type="text" /><br />
+          <form key={editIndex ?? "uj"} onSubmit={hozzaad}>
+            <label htmlFor="nev">Név</label>
+            <input id="nev" name="nev" type="text" defaultValue={szerkesztett?.nev ?? ""} /><br />
 
-              <label htmlFor="keszleten">Készleten</label>
-              <input name='keszleten' id="keszleten" type="checkbox" /><br />
+            <label htmlFor="tipus">Típus</label>
+            <input id="tipus" name="tipus" type="text" defaultValue={szerkesztett?.tipus ?? ""} /><br />
 
-              <label htmlFor="tipus">Típus</label>
-              <input type="text" name='tipus' /><br />
+            <label htmlFor="ar">Ár</label>
+            <input id="ar" name="ar" type="number" defaultValue={szerkesztett?.ar ?? 0} /><br />
 
-              <label htmlFor="ar">Típus</label>
-              <input type="number" name='ar' /><br />
+            <label htmlFor="keszleten">Készleten</label>
+            <input id="keszleten" name="keszleten" type="checkbox" defaultChecked={szerkesztett?.keszleten ?? false} /><br />
 
-              <button type="submit">Hozzáadás</button><br />
-            </form>
-            <HangszerTabla data={data} mod={currentSite} hangszerTorles={torles} hangszerModositKezd={modositKezd} flipKeszketen={flipKeszketen}></HangszerTabla>
-          </div>
+            <button type="submit">{editIndex === null ? "Hozzáadás" : "Mentés"}</button>
+            {editIndex !== null && <button type="button" onClick={() => setEditIndex(null)}>Mégse</button>}
+          </form>
         )
       }
 
-      {
-        currentSite == "index" && (
-          <HangszerTabla data={data} mod={currentSite} hangszerTorles={torles} hangszerModositKezd={modositKezd} flipKeszketen={flipKeszketen}></HangszerTabla>
-        )
-      }
-
-      {
-        currentSite == "mod" && (
-          <HangszerTabla data={data} mod={currentSite} hangszerTorles={torles} hangszerModositKezd={modositKezd} flipKeszketen={flipKeszketen}></HangszerTabla>
-        )
-      }
+      <HangszerTabla
+        data={data}
+        mod={currentSite}
+        hangszerTorles={torles}
+        hangszerModositKezd={modositKezd}
+        flipKeszketen={flipKeszketen}
+      />
 
     </>
   )

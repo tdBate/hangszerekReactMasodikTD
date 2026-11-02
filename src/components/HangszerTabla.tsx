@@ -15,7 +15,7 @@ export function HangszerTabla(props: HangszerTablaProps) {
                 <thead><tr><td>Név</td> <td>Típus</td> <td>Ár</td> <td>Készleten</td> </tr></thead>
                 <tbody>
                     {props.data.map((item, index) => (
-                        <tr>
+                        <tr key={index}>
                             <td>{item.nev}</td>
                             <td>{item.tipus}</td>
                             <td>{item.ar}</td>
