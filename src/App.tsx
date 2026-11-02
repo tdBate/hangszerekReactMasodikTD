@@ -51,14 +51,14 @@ function App() {
 
               <button type="submit">Hozzáadás</button><br />
             </form>
-            <HangszerTabla data={data} mod="admin" hangszerTorles={torles}></HangszerTabla>
+            <HangszerTabla data={data} mod="admin" hangszerTorles={torles} hangszerModositKezd={modositKezd}></HangszerTabla>
           </div>
         )
       }
 
       {
         currentSite == "index" && (
-          <HangszerTabla data={data} mod="index" hangszerTorles={torles}></HangszerTabla>
+          <HangszerTabla data={data} mod="index" hangszerTorles={torles} hangszerModositKezd={modositKezd}></HangszerTabla>
         )
       }
 

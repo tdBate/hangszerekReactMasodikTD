@@ -4,6 +4,7 @@ interface HangszerTablaProps {
     data: Hangszer[];
     mod: OldalTipus;
     hangszerTorles: (id: number) => void;
+    hangszerModositKezd: (id: number) => void;
 }
 
 export function HangszerTabla(props: HangszerTablaProps) {
@@ -20,10 +21,14 @@ export function HangszerTabla(props: HangszerTablaProps) {
                             <td>{item.keszleten ? "✅" : "❌"}</td>
 
                             {
-                                props.mod == "admin" && (
-                                    <td><div>
+                                props.mod == "admin" && (<>
+                                    <td>
                                         <button onClick={() => { props.hangszerTorles(index) }}>Törlés</button>
-                                    </div></td>
+                                    </td>
+                                    <td>
+                                        <button onClick={() => { props.hangszerModositKezd(index) }}>Módosít</button>
+                                    </td>
+                                </>
                                 )
                             }
                         </tr>
